@@ -22,12 +22,14 @@ namespace MyApi.Controllers
         {
             ApiResponseMessage responseMessage = new ApiResponseMessage();
             string retMsg = "";
+            retMsg += "RedisPassWord"+RedisPassword;
             responseMessage.Success = true;
             try
             {
                 if (!String.IsNullOrEmpty(message.Chanel))
                     {
-                    ConnectionMultiplexer conn = ConnectionMultiplexer.Connect(string.Format("{0}@localhost:6379", RedisPassword));
+                   
+                    ConnectionMultiplexer conn = ConnectionMultiplexer.Connect("localhost:6379,password="+RedisPassword);
                     if (conn.IsConnected)
                     {
                         IDatabase redis = conn.GetDatabase();
