@@ -12,7 +12,7 @@ namespace MyApi.Controllers
 {
     public class SendController : ApiController
     {
-
+        string RedisPassword = System.Configuration.ConfigurationManager.AppSettings["RedisPassword"];
         public string Get(string message)
         {
             return "You input " + message + "@" + DateTime.Now.ToString() + " from " + Request.RequestUri; 
@@ -27,7 +27,7 @@ namespace MyApi.Controllers
             {
                 if (!String.IsNullOrEmpty(message.Chanel))
                     {
-                    ConnectionMultiplexer conn = ConnectionMultiplexer.Connect("localhost:6379");
+                    ConnectionMultiplexer conn = ConnectionMultiplexer.Connect(string.Format("{0}@localhost:6379", RedisPassword));
                     if (conn.IsConnected)
                     {
                         IDatabase redis = conn.GetDatabase();
